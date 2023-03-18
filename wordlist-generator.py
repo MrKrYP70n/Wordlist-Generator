@@ -34,7 +34,7 @@ dog_name = input("Please enter the name of your dog: ")
 dob = input("Please enter your date of birth in dd/mm/yyyy format: ")
 partner_name = input("Please enter your partner's name: ")
 
-wordlist = list()
+wordlist = []
 wordlist.append(first_name + dog_name)
 wordlist.append(first_name + partner_name)
 wordlist.append(dog_name + partner_name)
@@ -58,11 +58,15 @@ wordlist.append(partner_name + day + month_strings[int(month)-1] + year)
 capital_words = list(map(lambda s: s.capitalize(), [word for word in wordlist]))
 wordlist.extend(capital_words)
 
-leet_words = list()
+leet_words = []
 for word in wordlist:
-    leet_words.append(convert_to_leet(word))
+    for i in range(len(word)):
+        leet_word = word[:i] + convert_to_leet(word[i]) + word[i+1:]
+        leet_words.append(leet_word)
 
 wordlist.extend(leet_words)
+
+wordlist = list(set(wordlist))  # remove duplicates
 
 name, ext = os.path.splitext(os.path.basename(dob))
 wordlist_file = open(name + "_wordlist.txt", "w")
